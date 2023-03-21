@@ -1,0 +1,30 @@
+<h1>Generate file list</h1> 
+
+<p>Before we start you should check your image format and the naming of your files. The preferred image format is *.tif and can be compressed with the packbits compression. JPEG or other image formats as well as MPEG video compression formats will not provide you with sub pixel resolution since the images are meant for saving as much space as possible.
+The script that we use to create a list of images to process is limited to certain naming conventions, but it is possible to generate your own list of images. If you want to change the format or the names of your images you can use free programs like Irfanview (www.irfanview.com) to batch process a huge number of images.</p>
+
+<p>Use the button 'Generate file list' in the main gui or type 'GenerateFileList;' at the MATLAB command line and press 'ENTER'. The following window should appear:<br>
+<img src="images/GenerateFileList1.jpg" width="15%" alt=""></p> 
+
+<p>If you select 'Automatically', the following dialog will ask you for the first image to process:<br>
+<img src="images/GenerateFileList2.jpg" width="60%" alt=""></p>  
+ 
+<p>Select the first image (e.g. 45001.bmp) and click on 'Open'. You will be asked to save the image sequence (file list) as a file named 'filenamelist.mat', please do not change this name since the following procedure depends on it. You should save this file in the folder where your images are stored.</p>  
+ 
+<p>After that you will be asked if you want to extract the time for the images:<br>
+<img src="images/GenerateFileList4.jpg" width="25%" alt=""><br>
+This option has to be chosen if you want to match stress and strain at the end of your analysis. You can choose between 'Yes (from file properties)' and 'Yes (from file "time.txt")'. In the first case MATLAB extracts the acquisition time steps from your images. The time resolution is limited to 1 second as the information is gathered from the EXIF data. In the second case the time steps are taken from a file "time.txt" that was created during image acquisition. In both cases, the extracted time steps are saved in 'timeimage.txt'.</p> 
+ 
+<p>If you choose 'Manually' for manual generation of the file list in the initial dialog, you will find a different window:<br>
+<img src="images/GenerateFileList5.jpg" width="15%" alt=""><br>
+Enter the number of the first and last image to create the file list. The numbers will be the varying part at the end of each file name.</p> 
+ 
+<p>The next windows will ask for the image name (prefix: fix part of the file name), the image extension and the number of digits for the varying image number (including leading zeroes):<br>
+<img src="images/GenerateFileList6.jpg" width="18%" alt=""><img src="images/GenerateFileList7.jpg" width="10%" alt=""><img src="images/GenerateFileList8.jpg" width="15%" alt=""></p>  
+
+<p>The next step is to save the file list into the folder of the images to process (keep recommended name):<br>
+<img src="images/GenerateFileList3.jpg" width="60%" alt=""></p>  
+ 
+
+ 
+ 

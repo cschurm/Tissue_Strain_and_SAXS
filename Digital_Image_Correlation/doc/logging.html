@@ -1,0 +1,15 @@
+<h1>Logging</h1> 
+
+<p>Several log files support the user by feedback about the procedure and ensure the reproducibility.</p>
+ 
+<p><ul><li><strong>CustomFilter.cfg</strong><br>
+Filter list (begin: top, end: bottom) that is applied during image correlation on all images. For more details check the MATLAB documentation for different filter types and their parameters.</li>
+<li><strong>corrproc.log</strong><br>
+Information about the DIC procedure (e.g. corrsize).</li>
+<li><strong>postproc.log</strong><br>
+Information about the post processing procedure (e.g. cleaning of markers).</li>
+<li><strong>imgquality.log</strong><br>
+Results of image quality check (e.g. noise, contrast).</li>
+<li><strong>RR_*.log</strong><br>
+Results of a round robin test (calculated by EvalRR) before cleaning (raw) and after cleaning (corr), contains statistics about correlation coefficient and displacements.</li>
+</ul></p>

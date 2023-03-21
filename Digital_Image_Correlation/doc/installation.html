@@ -1,0 +1,97 @@
+<h1>Installation</h1> 
+<h2>Requirements</h2>
+<p>This release has been developed and tested with MATLAB R2014a under Windows 7 Pro. You will need the following toolboxes:
+<ul><li>Optimization (for curve fitting processes)</li>
+<li>Image Processing (obviously)</li>
+<li>Parallel Computing (optional, if you want to use multicores).</li></ul></p>
+<h2>Installation step 1</h2>
+<p>Extract the files from the zip file that you just downloaded into your DIC work folder (e.g. in Windows: C:\DIC):
+<ul><li>DIC.m<br>
+main program to start</li>   
+<li>GenerateGrid.m<br>
+generate a grid raster of markers (gridx.dat, gridy.dat) that is needed for calculating correlations</li>   
+<li>GeneratFileList.m<br>
+generate an image sequence (filenamelist.mat) with associated file names and creates a list of time stamps that is needed for merging stress and strain</li> 
+<li>GenerateFilterList.m<br>
+generate a list of filters (CustomFilter.cfg) by choosing and testing from a list of available filters</li> 
+<li>CustomFilter.cfg<br>
+list of (noise) filters that is applied before the correlation calculation starts (e.g. median, mean)</li> 
+<li>CheckImageQuality.m<br>
+give user feedback regarding image quality (contrast, noise) before running DIC analysis</li> 
+<li>AverageImageStack.m<br>
+combine multiple images and average before running DIC analysis</li> 
+<li>ProcessCorrelations.m<br>
+main script for correlation calculation, calls sub script 'CalculateCorrelations.m' for different configurations:<br>
+small / large displacements, filtering, full analysis / resume previous analysis, single / multiprocessing</li> 
+<li>CalculateCorrelations.m<br>
+sub script for correlation calculation using 'cpcorr.m'</li> 
+<li>DisplacementAnalysis.m<br>
+analyze displacements with graphical user interface</li> 
+<li>SelectMarkers.m<br>
+select markers from different grid types</li> 
+<li>CleanMarkers.m<br>
+remove markers by user selection</li> 
+<li>CorrectMarkers.m<br>
+correct marker positions by reference grids with defined positions</li> 
+<li>StrainAnalysis.m<br>
+analyze strains (average strain 1D, local strain 1D, full strain 2D, strain between 2 points 1D)</li> 
+<li>CalculateStress.m<br>
+calculate stress for homogeneous, isotropic material</li> 
+<li>FitStrainOverDepth.m<br>
+fit strain over depth of processing time steps</li> 
+<li>PropertyAnalysisDuctile.m<br>
+analyze properties of ductile materials (e.g. Young's Modulus)</li> 
+<li>PropertyAnalysisBrittle.m<br>
+analyze properties of brittle materials (e.g. Young's Modulus)</li> 
+<li>CreateCalibration.m<br>
+create calibration based on selected input data</li> 
+<li>ApplyCalibration.m<br>
+apply calibration to selected output data</li> 
+<li>LabelPeaks.m<br> 
+detect peaks automatically by 'bwlabel.m' within a user provided region of interest</li> 
+<li>PickPeaks.m<br>
+detect peaks manually (one by one) by user selection within region of interest</li> 
+<li>PickPeaksLine.m<br>
+detect peaks manually (one by one) by user selection along a line</li> 
+<li>RTCorrelationSimple.m<br>
+"real-time" correlation code (calculate correlation for each saved image)</li>  
+<li>PlotMarkers.m<br>
+show images with marker positions</li> 
+<li>PlotImageGridSubset.m<br>
+visualize CORRSIZE (half of correlation subset window size) in the context of the image with its grid</li> 
+<li>EvalRR.m<br>
+evaluate results according to round robin test procedure</li>
+</ul></p>
+
+<p>Add your DIC work folder to the MATLAB path ('Set Path'):<br>
+<img src="images/matlabpath.jpg" width="40%" alt=""><br>
+Now the *.m files are registered in the MATLAB system and can be called from any location.</p>
+
+<h2>Installation step 2</h2>
+<p>You will need to edit the files 'pcorr.m' and 'findpeak.m'. Sometimes you have to change the property settings (remove write protection) so you can save it as a normal user. You can also start MATLAB as an administrator, edit the files and log back in as a user.</p>
+
+<p>In 'cpcorr.m' (type 'open cpcorr at the MATLAB prompt) you have to change:
+<ul><li>line 75:<br>
+<strong>from</strong><br>
+<span style="color:blue">CORRSIZE = 5;</span><br>
+<strong>to</strong><br>
+<span style="color:blue">CORRSIZE = 15;</span><br>
+This changes the size of the image part that is selected for correlation from 10x10 to 30x30 pixels. Change this to a smaller value if you experience slow computational speed or if you use low resolution images. Remember that markers need more than double the space from their center to the edge of the image, otherwise they cannot be tracked.</li>
+<li>line 133 and 134:<br>
+<strong>from</strong><br>
+<span style="color:blue">moving_fractional_offset = xymoving(icp,:) - round(xymoving(icp,:));<br>
+fixed_fractional_offset = xyfixed_in(icp,:) - round(xyfixed_in(icp,:));<br></span>
+<strong>to</strong><br>
+<span style="color:blue">moving_fractional_offset = xymoving(icp,:) - round(xymoving(icp,:)*1000)/1000;<br>
+fixed_fractional_offset = xyfixed_in(icp,:) - round(xyfixed_in(icp,:)*1000)/1000;<br></span>
+This changes the resolution of the marker positions to 1/1000th pixel. If you need higher resolution, just increase these values.</li></ul></p>
+ 
+<p>In 'findpeak.m' (which you will find in the private functions section of the Image Processing toolbox folder), you have to change:
+<ul><li>line 58 and 59:<br>
+<strong>from</strong><br>
+<span style="color:blue">x_offset = round(10*x_offset)/10;<br>
+y_offset = round(10*y_offset)/10;<br></span>
+<strong>to</strong><br>
+<span style="color:blue">x_offset = round(1000*x_offset)/1000;<br>
+y_offset = round(1000*y_offset)/1000;<br></span>  
+The easiest way to get there is to find the function call of 'findpeak.m' in 'cpcorr.m' in line 114, right click it and go to 'Open selection'.</li></ul></p>

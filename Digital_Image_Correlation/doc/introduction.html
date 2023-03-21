@@ -1,0 +1,18 @@
+<h1>Introduction</h1> 
+<p>Measuring strain in samples which are too small, big, compliant, soft or hot are typical scenarios where non-contact techniques are needed. A technique which can cover all that and also can deal with complicated strain fields in structures or structural materials is the Digital Image Correlation. With this technique, strain can be calculated from a series of consecutive images with sub pixel resolution as will be shown in the following chapters.</p>
+ 
+<p>Even though there are tons of codes from the image registration, artificial intelligence or the robotics community, none of them can easily be used by the strain measuring community. Commercial code is available also and has the advantage of getting a guaranty that it works, is nicely designed and has a good usability through user interfaces and typically a higher processing speed. The disadvantages are that commercial software typically has to be paid in k$, is available only as package with hardware, enjoys a notorious lack of programming interfaces or tools to change the code to fit it into a test setup as well as the probability of inaccessible data in case the software license is expired or it does not run on the new and fancy computer anymore.</p>
+ 
+<p>Out of all these reasons this code was started together with Rob Thompson and Dan Gianola during Chris stay in the group of Kevin J. Hemker at the Johns Hopkins University in Baltimore, MD, USA. Considerable extensions and new code as well as all the multi core stuff was added while Chris was heading a group ('microreliability') at the KIT. A graphical user interface (gui) for displacement analysis and routines for image noise control have been added by Melanie and Chris in his current group 'micromechanical stress analysis' at the Fraunhofer IWM with reference to the EU project iSTRESS (http://istress.eu).</p>
+ 
+<p>This code is not meant to be a direct competitor to commercial code, since we do not have that many resources to maintain the code, but as a different option with the advantages to be 'free', 'flexible' and 'scalable':
+<ul><li>'Free' in terms of free access even though we would like to ask you to cite our code in case you use it and 'free' again even though you need to buy MATLAB together with some toolboxes. Since most research institutions have access to this important tool, we think we still can name it 'free'.</li>
+<li>'Flexible' in terms of the relative easy way you can enhance this MATLAB code as a script language where you can add either other toolboxes or your own code to flex it around your application. We would appreciate it if you as a user could share your own code with all of us out here, so we can learn from your creativity.</li>
+<li>'Scalable' since you can easily start several sessions to process your images on more than one processor (core) and the newest code segments are already ready to use multicores and because you can also use Graphic Processing Units (GPU = the graphics processor on a graphics card, http://dside.dyndns.org/dict) or other add-on boards to enhance processing speed.</li>
+</ul></p> 
+ 
+<p>In case you are still reading, we would like to wish you fun using this code and hope we were able to provide you with a useful tool to help you with your experiments.</p>
+ 
+<p>Cheers, Melanie and Chris.</p>
+ 
+<p>Freiburg, May 2016.</p>

@@ -1,0 +1,32 @@
+
+<p>Add your DIC work folder to the MATLAB path ('Set Path'):<br>
+Now the *.m files are registered in the MATLAB system and can be called from any location.</p>
+
+<h2>Installation</h2>
+<p>You will need to edit the files 'pcorr.m' and 'findpeak.m'. Sometimes you have to change the property settings (remove write protection) so you can save it as a normal user. You can also start MATLAB as an administrator, edit the files and log back in as a user.</p>
+
+<p>In 'cpcorr.m' (type 'open cpcorr at the MATLAB prompt) you have to change:
+<ul><li>line 75:<br>
+<strong>from</strong><br>
+<span style="color:blue">CORRSIZE = 5;</span><br>
+<strong>to</strong><br>
+<span style="color:blue">CORRSIZE = 15;</span><br>
+This changes the size of the image part that is selected for correlation from 10x10 to 30x30 pixels. Change this to a smaller value if you experience slow computational speed or if you use low resolution images. Remember that markers need more than double the space from their center to the edge of the image, otherwise they cannot be tracked.</li>
+<li>line 133 and 134:<br>
+<strong>from</strong><br>
+<span style="color:blue">moving_fractional_offset = xymoving(icp,:) - round(xymoving(icp,:));<br>
+fixed_fractional_offset = xyfixed_in(icp,:) - round(xyfixed_in(icp,:));<br></span>
+<strong>to</strong><br>
+<span style="color:blue">moving_fractional_offset = xymoving(icp,:) - round(xymoving(icp,:)*1000)/1000;<br>
+fixed_fractional_offset = xyfixed_in(icp,:) - round(xyfixed_in(icp,:)*1000)/1000;<br></span>
+This changes the resolution of the marker positions to 1/1000th pixel. If you need higher resolution, just increase these values.</li></ul></p>
+ 
+<p>In 'findpeak.m' (which you will find in the private functions section of the Image Processing toolbox folder), you have to change:
+<ul><li>line 58 and 59:<br>
+<strong>from</strong><br>
+<span style="color:blue">x_offset = round(10*x_offset)/10;<br>
+y_offset = round(10*y_offset)/10;<br></span>
+<strong>to</strong><br>
+<span style="color:blue">x_offset = round(1000*x_offset)/1000;<br>
+y_offset = round(1000*y_offset)/1000;<br></span>  
+The easiest way to get there is to find the function call of 'findpeak.m' in 'cpcorr.m' in line 114, right click it and go to 'Open selection'.</li></ul></p>

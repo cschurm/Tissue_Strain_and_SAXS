@@ -1,0 +1,26 @@
+<h1>MATLAB Basics</h1> 
+
+<p>The MATLAB help is extremely helpful and should be the very first choice to check in case of errors. If you have never worked with MATLAB before, but would like to check it out, the 'Getting Started' is a good point to start with.</p>
+ 
+<p><ul><li><strong>TAB</strong><br>
+Pressing the TAB key on your keyboard after you started typing at the command line MATLAB will show you all functions with the same first letters.</li>
+<li><strong>Arrow up function</strong><br>
+Pressing the Arrow Up key on your keyboard after you started typing a command will show the last command you started with the same first letters.</li>
+<li><strong>Current folder</strong><br>
+The current folder of MATLAB is the folder on your hard disk that is currently selected to process data (close to the upper edge of the MATLAB main window). Functions like 'ProcessCorrelations.m' require certain files to be present in the current folder otherwise they will produce an error. Pressing the little button on the right hand side with the three little dots on it will let you select another folder. Another possibility is to use the command window (see MATLAB help) or you can select the current directory if it is activated under 'View' in that extra window.</li>
+<li><strong>Set semicolon</strong><br>
+Set the semicolon after calling a function (e.g. 'ProcessCorrelations;'), otherwise all returned data from a called function would be plotted in the command window.</li>
+<li><strong>Workspace</strong><br>
+The workspace is the place where you can load all your data. Scripts and functions will write their variables and return values into the workspace. The workspace can be cleared by the command 'clearvars'.</li>
+<li><strong>How to load data into the workspace?</strong><br>
+Either choose 'File', 'Open...' and select the data file you want to load or use the command window e.g. by typing 'load('filenamelist')' and 'filenamelist' is present in the current directory. Then the data will appear in the workspace window.</li>
+<li><strong>How to save data from the workspace to the hard disk?</strong><br>
+Right click on the data that you want to save to the hard disk and select 'Save Selection As...'. It will save the data in the MATLAB file fomat *.mat which is only accessible by MATLAB. If you want to make the data accessible for other programs, you should save it as ASCII file. Therefore, type 'save('stress.txt','alltemp','-ASCII');' at the MATLAB command window to save the variable 'alltemp' as ASCII text file with the name 'stress.txt'. If you want to open it with MATLAB or Excel, you have to import the file. The default delimiter is TAB, but can also be chosen to be comma or space.</li>
+<li><strong>How to transfer parameters from the workspace to the functions?</strong><br>
+If you type 'DisplacementAnalysis;' into the command window of MATLAB, the function will ask you for the needed files. Instead, you can transfer the data to the function by typing: 'DisplacementAnalysis(ValidX,ValidY);' with 'ValidX' and 'ValidY' as variables from the workspace.</li>
+<li><strong>How do I transfer the data from the functions into the workspace?</strong><br>
+If you type '[ValidX,ValidY]=DisplacementAnalysis;', the variables 'ValidX' and 'ValidY' will be created in the workspace after running 'DisplacementAnalysis.m'. If you have manipulated 'ValidX' and 'ValidY' (e.g. if you cleaned up the data set from miss-tracked markers) you should save them.</li>
+<li><strong>Why are all images opened in MATLAB mirrored to the horizontal center axis of the image?</strong><br>
+In MATLAB pixel (1,1) is in the lower left while image processing software starts at the upper left corner.</li>
+<li><strong>How to stop a function in MATLAB?</strong><br>
+To stop a function, press the control key 'Crtl' together with 'C'.</li></ul></p>

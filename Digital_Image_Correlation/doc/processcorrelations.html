@@ -1,0 +1,58 @@
+<h1>Process correlations</h1> 
+
+<p>This is the central function for calculating and processing correlations on all markers and images. Therefore, the current directory in MATLAB has to be the folder where the files 'filenamelist.mat', 'CustomFilter.cfg','gridx.dat' and 'gridy.dat' are stored. To start the procedure click the button 'Process correlations' or type 'ProcessCorrelations;' at the MATLAB command line and press 'ENTER'.</p>
+
+<p>First navigate to the file or directory containing your 'filenamelist.mat' file and your images to be tracked.<p>
+
+<p>You need to choose between 'Single processing', 'Multi processing' (parallel computing) and 'GPU processing'. The latter only works for nvidia graphic cards with cuda support.<br>
+<img src="images/ProcessCorrelations8.png" width="8%" alt=""></p>
+
+<p>Specify the reference image for correlation: 'First' (default of old version) or 'Previous'. If you select 'Previous', you are asked for a stack size after which the reference is renewed (e.g. 1: each time, 20: after 20 time steps).<br>
+<img src="images/ReferenceImage.png" width="9%" alt=""></p>
+ 
+<p>If you expect small displacements between the images, select 'Small displacements', otherwise proceed with 'Large displacements'. For large displacements you can choose between:
+<ul><li>a scalar correction displacement field (one averaged value per image, compensates large mean displacements)</li>
+<li>a vectorial correction displacement field (vectorial value for all markers per image, compensates also local distortions).</li></ul>
+<img src="images/ProcessCorrelations1.jpg" width="15%" alt=""></p>
+
+<h2>Small displacements</h2>
+ 
+<p>Define the grid for calculating correlations, either load an existing grid or create a new one as described in <a href="generategrid.html" target="main">Generate grid</a>.<br>
+<img src="images/ProcessCorrelations2.jpg" width="10%" alt=""></p>
+ 
+<p>Select the operation mode, you can either run a full analysis (which is the standard case) or you can resume a previous calculation that has crashed or has been interrupted by the user.<br>
+<img src="images/ProcessCorrelations3.jpg" width="10%" alt=""></p>
+ 
+<p>For a full analysis, the first (base) image from 'filenamelist.mat' is opened and the grid is plotted as green crosses on top. The base image is correlated with each image from 'filenamelist.mat'. For each correlation result, the new raster positions are plotted as red crosses, and the green crosses for the initial grid on top of the image. The time for processing all images will be plotted on the figure. The filters from the filter list 'CustomFilter.cfg' are applied to each image when processing.<br>
+<img src="images/ProcessCorrelations7.jpg" width="40%" alt=""></p>
+ 
+<p>Depending on the number of images and markers you are tracking, this process can take between seconds and days. For 100 images and 200 markers, a decent computer should need 200 seconds. To obtain a better result, you can always run jobs overnight with higher resolutions (e.g. 6000 markers in 1000 images).</p>
+ 
+<p>Keep in mind that 'CORRSIZE' which you changed in 'cpcorr.m' will limit your resolution. If you chose to use the 15 pixel as suggested a marker distance of 30 pixels will lead to a full cover of the strain field. Choosing smaller marker distances will lead to an interpolation since two neighboring markers share pixels. Nevertheless a higher marker density can reduce the noise of the strain field.</p>
+ 
+<p>When all images are processed, the files 'validx.dat' and 'validy.dat' will be written. These files contain the coordinates of the marker positions in a text based format which can be accessed by any desired editor. The standard deviations of the markers are stored in 'stdx.dat' and 'stdy.dat'.</p>
+ 
+<p>To stop 'ProcessCorrelations', use the key combination 'Ctrl-C'.</p>
+
+<h2>Large displacements</h2>
+ 
+<p>This advanced procedure compensates large displacements between images which might result from a low image acquisition rate or from large oscillations. Therefore, we first calculate the correlations on a list of images with reduced size on a coarse grid. Subsequently, we determine the correlations for the original sized images on a fine grid taking into account the results of the first step by:
+<ul><li>a scalar correction displacement field (differencing over averaged coordinates of the coarse grid)</li>
+<li>a vectorial correction displacement field (differencing over the coordinates of the coarse grid on the associated fine grid neighbors and the fine grid).</li></ul></p>
+ 
+<p>First you will be asked for a reduction factor.<br>
+<img src="images/ProcessCorrelations4.jpg" width="25%" alt=""></p>
+ 
+<p>Then you need to provide a coarse grid (that will be saved in 'gridxcoarse.dat' and 'gridycoarse.dat') for a pre-calculation of the correlations in the reduced images. Either load an existing grid or create a new one as described in <a href="generategrid.html" target="main">Generate grid</a>.<br>
+<img src="images/ProcessCorrelations5.jpg" width="25%" alt=""></p>
+ 
+<p>In a next step you will be asked for a fine grid (that will be saved in 'gridxfine.dat' and 'gridyfine.dat') to calculate the correlations in the original images. Either load an existing grid or create a new one as described in <a href="generategrid.html" target="main">Generate grid</a>.<br>
+ <img src="images/ProcessCorrelations6.jpg" width="17%" alt=""></p>
+ 
+<p>Finally, the correlations will be determined first for the coarse grid and second for the fine grid. For each correlation result, the new raster positions are plotted as red crosses, and the green crosses for the initial grid on top of the image. The time for processing all images will be plotted on the figure. When all images are processed, the files 'validx.dat' and 'validy.dat' (coordinates of the marker positions) will be written. The standard deviations of the markers are stored in 'stdx.dat' and 'stdy.dat'.</p>
+
+<h2>Automation by Record & Replay</h2>
+
+If you want to run the DIC analysis in silent mode (without user interaction):
+<ol><li>Record phase: Run analysis with DIC package (DIC.m at MATLAB command prompt); first create file list, grid(s) and filter list (optional), then run correlation and give user inputs which are stored in log file 'proccorr.log'.</li>
+<li>Replay phase: Run process correlations module (ProcessCorrelations(1) at MATLAB command prompt); user inputs are obtained from log file 'proccorr.log' and are considered in analysis which is run without user interaction.</li></ol>

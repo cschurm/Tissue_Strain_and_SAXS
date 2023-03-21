@@ -1,0 +1,53 @@
+<h1>Digital Image Correlation and Tracking Procedure</h1> 
+ 
+<p>The main gui is opened when you type 'DIC.m' at the MATLAB command prompt and press 'ENTER':<br> 
+<img src="images/dicgui.png" width="30%" alt=""></p> 
+
+<p><strong>Functions (for details see menu entries on the left):</strong>
+<ul><li><strong>Generate file list</strong><br>
+calls 'GenerateFileList.m'</li>
+<li><strong>Generate grid</strong><br>
+calls 'GenerateGrid.m'</li>
+<li><strong>Generate filter list</strong><br>
+calls 'GenerateFilterList.m'</li>
+<li><strong>Check image quality</strong><br>
+calls 'CheckImageQuality.m'</li>
+<li><strong>Process correlations</strong><br>
+calls 'ProcessCorrelations.m'</li>
+<li><strong>Analyze results</strong><br>
+calls 'DisplacementAnalysis.m' and 'StrainAnalysis.m'</li>
+<li><strong>Create calibration</strong><br>
+calls 'CreateCalibration.m'</li>
+<li><strong>Apply calibration</strong><br>
+calls 'ApplyCalibration.m'</li>
+<li><strong>Check image quality</strong><br>
+calls 'CheckImageQuality.m'.</li>
+<li><strong>Average image stack</strong><br>
+calls 'AverageImageStack.m'.</li>
+</ul></p> 
+ 
+<p>The DICT procedure contains two different ways to obtain the marker positions with its associated displacements and strains at defined sample locations:
+<ol><li>Calculating the correlation coefficient for a fixed grid of markers
+<ol type="a"><li>without calibration</li>
+<li>with calibration (with corrected marker positions)</li></ol></li>
+<li>Peak tracking of characteristic features (e.g. bright round spots on dark background).</li></ol>
+<img src="images/overview.png" width="30%" alt=""></p>
+ 
+<p><strong>Input and output files:</strong><br>
+<ul><li><strong>Image files</strong><br>
+Should be 8 bit greyscale Tiff (*.tif) images with consecutive numbering.</li>
+<li><strong>'filenamelist.mat'</strong><br>
+Contains the names of the images in the list.</li>
+<li><strong>'timeimage.txt'</strong><br>
+Contains the capture time of the images. If you modify an image, make sure that the original time is preserved.</li>
+<li><strong>'gridx.dat','gridy.dat'</strong><br>
+Contain the x- and y-pixel positions of the initial grid created by the 'GenerateGrid.m' function. You can create your own grid with Excel and save it as tab delimited ASCII files (two files with column vectors or matrices of equal size).</li>
+<li><strong>'CustomFilter.cfg'</strong><br>
+Contains the list of custom filters selected by the user.</li>
+<li><strong>'validx.dat','vaildy.dat'</strong><br>
+Contain the position of each marker for each image in columns as tab delimited ASCII files.</li>
+<li><strong>'corrcoef.dat'</strong><br>
+Contains the correlation coefficient [0,1] of each marker for each image in columns as tab delimited ASCII files.</li>
+<li><strong>'stdx.dat','stdy.dat'</strong><br>
+Contain the standard deviation of each marker for each image in columns as tab delimited ASCII files.</li></ul></p>
+

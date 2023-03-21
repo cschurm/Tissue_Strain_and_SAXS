@@ -1,0 +1,25 @@
+<h1>Generate grid</h1> 
+
+<p>The grid marker positions can be defined by the user. Therefore, the marker positions in pixels are stored in a text based format, where the x-position is saved as 'gridx.dat' and the y-position is saved as 'gridy.dat'.</p>
+ 
+<p>To start click the button 'Generate grid' in the main gui or type 'GenerateGrid;' at the MATLAB command line and press 'ENTER'. The following window should appear:<br>
+<img src="images/GenerateGrid1.jpg" width="60%" alt=""><br>
+In this dialog, the first (base) image can be selected in which the grid will be created.</p>
+
+<p>After selecting this base image, the image will be opened and a new dialog pops up to ask you if you would like to load an existing grid. If you want to create a new one, hit 'No' and go ahead.<br>
+<img src="images/GenerateGrid2.jpg" width="35%" alt=""><img src="images/GenerateGrid3.jpg" width="10%" alt=""></p>
+ 
+<p>You will get a new choice where you can select a shape for your grid.<br>
+<img src="images/GenerateGrid4.png" width="10%" alt=""><br>
+The different types are a rectangular, an ellipsoidal or a circular grid, two markers, or a line of markers.</p> 
+
+<p>If you choose a rectangular grid type, the pointer will change from an arrow to a horizontal and a vertical line which will help you finding the right position. The idea is to click on the two diagonal positions (lower left, upper right), which will define the outer dimensions of a box containing the grid.<br>
+<img src="images/GenerateGrid8.jpg" width="60%" alt=""></p>
+ 
+<p>The selected box will be shown in the image and a dialog will pop up to ask you for the input of a raster point distance in x- and y-direction.<br>
+<img src="images/GenerateGrid5.jpg" width="20%" alt=""></p>
+
+<p>The code will now generate the chosen grid and plot it on top of the sample image. The last dialog will ask you if you want to use and save the generated grid ('gridx.dat' and 'gridy.dat'), if you want to try again or if you want to go back to the main menu.<br>
+<img src="images/GenerateGrid7.jpg" width="40%" alt=""><img src="images/GenerateGrid6.jpg" width="10%" alt=""></p>
+ 
+<p>If you are happy with the result, hit 'END' at the grid generator main menu.</p>

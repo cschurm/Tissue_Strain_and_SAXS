@@ -1,0 +1,66 @@
+0. Adapt corrsize and rounding according to documentation (installation step 2)
+1. Copy files "cpcorr.m" and "findpeak.m" from the toolbox path (e.g. C:\Program Files\MATLAB\R2014a\toolbox\images\images) to your local DIC directory (downloaded DIC code)
+2. Rename "cpcorr.m" to "diccpcorr.m"
+
+3. Open "diccpcorr.m"
+4. Replace 
+   "function xymoving = cpcorr(varargin)"
+    with
+    "function [xymoving,xstd,ystd,corrcoef] = diccpcorr(CORRSIZE,ProcFuncPtrs,varargin)"
+5. Comment out CORRSIZE parameter: %CORRSIZE = 15;
+6. Optional (for verification by warnings on the MATLAB console): 
+   Add 
+   "warning(['CORRSIZE=',num2str(CORRSIZE)]);"
+   below commented CORRSIZE parameter
+7. Add 
+    "corrcoef=zeros(ncp,1);
+    xstd=zeros(ncp,1); 
+    ystd=zeros(ncp,1);" 
+    before 
+    "for icp = 1:ncp"
+10. Replace
+    "norm_cross_corr = normxcorr2(sub_moving,sub_fixed);"
+    with 
+    "sub_moving=ProcFuncPtrs.SendData(sub_moving);
+    sub_fixed=ProcFuncPtrs.SendData(sub_fixed);
+    norm_cross_corr = normxcorr2(sub_moving,sub_fixed);  
+    norm_cross_corr = ProcFuncPtrs.ReceiveData(norm_cross_corr);"
+11. Replace 
+    "[xpeak, ypeak, amplitude] = findpeak(norm_cross_corr,subpixel);"
+    with
+    "[xpeak, ypeak, xpeakstd, ypeakstd, amplitude] = findpeak(norm_cross_corr,subpixel);
+    corrcoef(icp,1) = amplitude;
+    xstd(icp,1) = xpeakstd;
+    ystd(icp,1) = ypeakstd;"
+12. Save and close "diccpcorr.m"
+
+13. Open "findpeak.m" (your local version)
+14. Replace
+    "function [xpeak, ypeak, max_f] = findpeak(f,subpixel)"
+    with
+    "function [xpeak, ypeak, xstd, ystd, max_f] = findpeak(f,subpixel)"
+15. Add
+    "xstd=1e-4;
+    ystd=1e-4;"
+    as first two code lines after copyright in commented block
+16. Replace
+    "x_offset = (-A(3)*A(4)+2*A(6)*A(2)) / (A(4)^2-4*A(5)*A(6));
+    y_offset = -1 / ( A(4)^2-4*A(5)*A(6))*(A(4)*A(2)-2*A(5)*A(3));"
+    with
+    "x_num = (-A(3)*A(4)+2*A(6)*A(2));
+    den = (A(4)^2-4*A(5)*A(6));
+    x_offset = x_num / den ;
+    y_num = (A(4)*A(2)-2*A(5)*A(3));
+    y_offset = -1 * y_num / ( den );
+    e=u-X*A;
+    n=9;
+    p=6;
+    var=sum(e.^2)/(n-p);
+    cov=inv(X'*X)*var;
+    s=sqrt([cov(1,1),cov(2,2),cov(3,3),cov(4,4),cov(5,5),cov(6,6)]);
+    x_num_std=sqrt(4*A(6)^2*A(2)^2*((s(6)/A(6))^2+(s(2)/A(2))^2)+A(3)^2*A(4)^2*((s(3)/A(3))^2+(s(4)/A(4))^2));
+    den_std=sqrt(16*A(5)^2*A(6)^2*((s(5)/A(5))^2+(s(6)/A(6))^2)+2*s(4)^2*A(4)^2);
+    y_num_std=sqrt(4*A(5)^2*A(3)^2*((s(5)/A(5))^2+(s(3)/A(3))^2)+A(4)^2*A(2)^2*((s(4)/A(4))^2+(s(2)/A(2))^2));
+    xstd=sqrt(x_offset^2*((x_num_std/x_num)^2+(den_std/den)^2));
+    ystd=sqrt(y_offset^2*((den_std/den)^2+(y_num_std/y_num)^2));"
+17. Save and close "findpeak.m"

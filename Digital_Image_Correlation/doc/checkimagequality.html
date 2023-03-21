@@ -1,0 +1,23 @@
+<h1>Check image quality</h1> 
+
+<p>The image quality can be checked quickly by the user with few images (2-3) that are recorded before starting the actual experiment.</p>
+ 
+<p>To start click the button 'Check image qualiy' in the main gui or type 'CheckImageQuality;' at the MATLAB command line and press 'ENTER'.<br>
+<img src="images/QualityTestSelectRegion.png" width="40%" alt=""><br>
+On the first image, the user should select the region of interest by marking upper left and bottom right corners of a rectangle.</p>
+
+<p>The contrast (histogram), correlation (value in [0,1]) and relative entropy (value in [0,1]) within each single image are evaluated:<br>
+<img src="images/qualitygood.png" width="40%" alt=""><br>
+A green histogram indicates a good quality without further user action, while a red histogram stands for a bad quality that requires further user action.</p>
+ 
+<p>The corresponding log file (imagequality.log) contains the correlations between the images (1 compared to others) and required user actions:<br>
+<img src="images/QualityTestGoodLog.png" width="40%" alt=""><br>
+In this example no user action is required.
+The noise (variance) between the images is also shown:<br>
+<img src="images/noisegood.png" width="40%" alt=""><br></p> 
+
+<p>Another example requires some user actions:<br>
+<img src="images/qualitybadcontrast.png" width="90%" alt=""><br>
+<img src="images/QualityTestBadLog.png" width="60%" alt=""><br>
+<img src="images/noisebadcontrast.png" width="40%" alt=""></p>
+ 
